@@ -1,0 +1,57 @@
+Assignment 1
+
+CREATE TABLE SALESPEOPLE (
+    Snum INT(4),
+    Sname VARCHAR(10),
+    City VARCHAR(10),
+    Comm FLOAT(3,2)
+);
+
+create table CUSTOMETRS (
+Cnum int(4),
+Cname varchar(10),
+City varchar(10),
+Rating int(4),
+Snum int(4)
+);
+
+create table ORDERS (
+Onum int(4),
+Amt float(7,2),
+Odate date,
+Cnum int(4),
+Snum int(4)
+);
+
+
+INSERT INTO SALESPEOPLE (Snum, Sname, City, Comm)
+VALUES
+    (1001, 'John', 'New York', 0.10),
+    (1002, 'Alice', 'Los Angeles', 0.12),
+    (1003, 'Bob', 'Chicago', 0.15),
+    (1004, 'Emma', 'San Francisco', 0.08);
+
+
+INSERT INTO CUSTOMERS (Cnum, Cname, City, Rating, Snum)
+VALUES
+    (2001, 'Hoffman', 'London', 100, 1001),
+    (2002, 'Giovanni', 'Rome', 200, 1003),
+    (2003, 'Liu', 'San Jose', 200, 1002),
+    (2004, 'Grass', 'Berlin', 300, 1002),
+    (2006, 'Clemens', 'London', 100, 1001),
+    (2008, 'Cisneros', 'San Jose', 300, 1004),
+    (2007, 'Pereira', 'Rome', 100, 1004);
+
+
+INSERT INTO ORDERS (Onum, Amt, Odate, Cnum, Snum)
+VALUES
+    (3001, 18.69, '1990-10-03', 2008, 1001),
+    (3002, 767.19, '1990-10-03', 2001, 1002),
+    (3003, 1900.10, '1990-10-03', 2007, 1003),
+    (3004, 5160.45, '1990-10-03', 2003, 1001),
+    (3005, 1098.16, '1990-10-03', 2008, 1002),
+    (3006, 1713.23, '1990-10-04', 2002, 1003),
+    (3007, 75.75, '1990-10-04', 2004, 1004),
+    (3008, 4723.00, '1990-10-05', 2006, 1001),
+    (3009, 1309.95, '1990-10-06', 2004, 1002),
+    (3010, 9891.88, '1990-10-06', 2006, 1003);
