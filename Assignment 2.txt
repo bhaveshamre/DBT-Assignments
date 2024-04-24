@@ -1,0 +1,12 @@
+Assignment –2
+Introducing Relational Databases.
+1) Which field of the Customers table is the primary key?
+- Cnum is the primary key.
+2) What is the 4th column of the Customers table?
+- Rating Column.
+3) What is another word for row? For column?
+- row is called as 'record' or 'tuple', and column is called as 'Attribute' or 'field'.
+4) Why isn’t it possible to see the first five rows of a table?
+- It might not be possible to see the first five rows of a table if there are no records (rows) in the table,
+- or if there are restrictions on access privileges that prevent viewing the data. 
+- Additionally, if there's a large dataset and only a limited number of rows are displayed at a time due to    performance considerations or the limitations of the database viewer, you might not see the first five rows    initially.
