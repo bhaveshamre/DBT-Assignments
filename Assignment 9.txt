@@ -1,0 +1,70 @@
+Assignment – 9
+Querying Multiple Tables at Once.
+1) Write a query that lists each order number followed by the name of the customer who made the order.
+- select orders.onum,customer.cname from orders,customer where orders.cnum=customer.cnum;
++------+----------+
+| onum | cname    |
++------+----------+
+| 3001 | Cisneros |
+| 3003 | Hoffman  |
+| 3002 | Pereira  |
+| 3005 | Liu      |
+| 3006 | Cisneros |
+| 3009 | Giovanni |
+| 3007 | Grass    |
+| 3008 | Clemens  |
+| 3010 | Grass    |
+| 3011 | Clemens  |
++------+----------+
+10 rows in set (0.00 sec)
+
+2) Write a query that gives the names of both the salesperson and the customer for each order along with the order number.
+- select sname,cname,onum from orders,customer,salespeople where salespeople.snum = customer.snum and customer.snum=orders.snum;
++--------+----------+------+
+| sname  | cname    | onum |
++--------+----------+------+
+| Peel   | Clemens  | 3003 |
+| Peel   | Hoffman  | 3003 |
+| Rifkin | Pereira  | 3002 |
+| Serres | Grass    | 3005 |
+| Serres | Liu      | 3005 |
+| Motika | Giovanni | 3009 |
+| Serres | Grass    | 3007 |
+| Serres | Liu      | 3007 |
+| Peel   | Clemens  | 3008 |
+| Peel   | Hoffman  | 3008 |
+| Serres | Grass    | 3010 |
+| Serres | Liu      | 3010 |
+| Peel   | Clemens  | 3011 |
+| Peel   | Hoffman  | 3011 |
++--------+----------+------+
+14 rows in set (0.00 sec)
+
+
+3) Write a query that produces all customers serviced by salespeople with a commission above 12%. Output the customer’s name, the salesperson’s name, and the salesperson’s rate of commission.
+-  select cname,sname,comm from customer,salespeople where salespeople.snum=customer.snum and comm>0.12;
++----------+--------+------+
+| cname    | sname  | comm |
++----------+--------+------+
+| Giovanni | Motika | 0.13 |
+| Liu      | Serres | 0.13 |
+| Grass    | Serres | 0.13 |
+| Pereira  | Rifkin | 0.14 |
++----------+--------+------+
+4 rows in set (0.00 sec)
+
+
+4) Write a query that calculates the amount of the salesperson’s commission on each order by a customer with a rating above 100.
+- select cname,sname,rating,amt*comm from orders,customer,salespeople where salespeople.snum=customer.snum and orders.snum=customer.snum and rating > 100;
++----------+--------+--------+----------+
+| cname    | sname  | rating | amt*comm |
++----------+--------+--------+----------+
+| Liu      | Serres |    200 |   670.86 |
+| Grass    | Serres |    300 |   670.86 |
+| Giovanni | Motika |    200 |   222.72 |
+| Liu      | Serres |    200 |     9.85 |
+| Grass    | Serres |    300 |     9.85 |
+| Liu      | Serres |    200 |   170.29 |
+| Grass    | Serres |    300 |   170.29 |
++----------+--------+--------+----------+
+7 rows in set (0.00 sec)
