@@ -1,0 +1,44 @@
+Assignment – 11
+Subqueries.
+1) Write a query that uses a subquery to obtain all orders for the customer named Cisneros. Assume you do not know his customer number (cnum).
+- select * from orders where cnum=(select cnum from customer where cname='cisneros');
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
++------+---------+------------+------+------+
+2 rows in set (0.00 sec)
+
+2) Write a query that produces the names and ratings of all customers who have above-average orders.
+- SELECT cname, rating
+    -> FROM customer
+    -> WHERE cnum IN (
+    ->     SELECT cnum
+    ->     FROM orders
+    ->     GROUP BY cnum
+    ->     HAVING AVG(amt) > (
+    ->         SELECT AVG(amt)
+    ->         FROM orders
+    ->     )
+    -> );
++---------+--------+
+| cname   | rating |
++---------+--------+
+| Liu     |    200 |
+| Clemens |    100 |
++---------+--------+
+2 rows in set (0.09 sec)
+
+
+3) Write a query that selects the total amount in orders for each salesperson for whom this total is greater than the amount of the largest order in the table.
+- select sum(amt),snum from orders group by snum having sum(amt) > (select max(amt) from orders);
++----------+------+
+| sum(amt) | snum |
++----------+------+
+| 15382.07 | 1001 |
++----------+------+
+1 row in set (0.00 sec)
+
+
+
