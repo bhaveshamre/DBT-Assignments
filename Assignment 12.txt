@@ -1,0 +1,73 @@
+Assignment – 12
+Using the operators IN, ANY, and ALL.
+1) Write a query that selects all customers whose ratings are equal to or greater than ANY of Serres’.
+- SELECT cname, rating
+    -> FROM customer
+    -> WHERE rating >= ANY (
+    ->     SELECT rating
+    ->     FROM customer
+    ->     WHERE snum = (
+    ->         SELECT snum
+    ->         FROM salespeople
+    ->         WHERE sname = 'Serres'
+    ->     )
+    -> );
++----------+--------+
+| cname    | rating |
++----------+--------+
+| Giovanni |    200 |
+| Liu      |    200 |
+| Grass    |    300 |
+| Cisneros |    300 |
++----------+--------+
+4 rows in set (0.00 sec)
+
+2) Write a query using ANY or ALL that will find all salespeople who have no customers located in their city.
+- select snum,sname,salespeople.city from salespeople where salespeople.city != all(select customer.city from customer,salespeople where salespeople.snum=customer.snum and salespeople.city!=customer.city);
++------+---------+-----------+
+| snum | sname   | city      |
++------+---------+-----------+
+| 1002 | Serres  | San Jose  |
+| 1003 | Motika  | London    |
+| 1004 | Rifkin  | Barcelona |
+| 1005 | Axelrod | New York  |
+| 1001 | Peel    | London    |
++------+---------+-----------+
+5 rows in set (0.03 sec)
+
+3) Write a query that selects all orders for amounts greater than any for the customers in London.
+-  select * from orders where amt>any(select amt from orders where cnum in (select cnum from salespeople where city='london'));
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+9 rows in set (0.00 sec)
+
+4) Write the above query using MIN or MAX.
+- select * from orders where amt> (select max(amt) from orders where cnum in (select cnum from salespeople where city='london'));
+Empty set (0.00 sec)
+
+- select * from orders where amt> (select min(amt) from orders where cnum in (select cnum from salespeople where city='london'));
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+9 rows in set (0.00 sec)
