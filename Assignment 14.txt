@@ -1,0 +1,133 @@
+ssignment – 14
+Entering, Deleting, and Changing Field Values.
+1) Write a command that puts the following values, in their given order, into the salespeople table: city – San Jose, name – Blanco, comm – NULL, cnum – 1100.
+- select * from salespeople;
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1003 | Motika  | London    | 0.13 |
+| 1004 | Rifkin  | Barcelona | 0.14 |
+| 1005 | Axelrod | New York  | 0.15 |
+| 1001 | Peel    | London    | 0.12 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into salespeople(city,sname,comm,cnum) values('SanJose','Blanco',NULL,1100);
+ERROR 1054 (42S22): Unknown column 'cnum' in 'field list'---------------------------------------------------------ANS
+
+desc salespeople;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| snum  | int         | YES  |     | NULL    |       |
+| sname | varchar(10) | YES  |     | NULL    |       |
+| city  | varchar(10) | YES  |     | NULL    |       |
+| comm  | float(3,2)  | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.43 sec)
+
+
+
+2) Write a command that removes all orders from customer Clemens from the Orders table.
+-DELETE orders
+    -> FROM orders,
+    -> customer where orders.cnum = customer.cnum
+    -> WHERE customer.cname = 'Clemens';
+Query OK, 2 rows affected (0.54 sec)
+
+mysql> select * from orders;
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
++------+---------+------------+------+------+
+8 rows in set (0.00 sec)
+
+3) Write a command that increases the rating of all customers in Rome by 100.
+- select * from customer;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+
+update customer set rating=rating +100 where city='Rome';
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+select * from customer;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    300 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    200 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+
+4) Salesperson Serres has left the company. Assign her customers to Motika
+- select * from salespeople;
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1003 | Motika  | London    | 0.13 |
+| 1004 | Rifkin  | Barcelona | 0.14 |
+| 1005 | Axelrod | New York  | 0.15 |
+| 1001 | Peel    | London    | 0.12 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customer;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    300 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    200 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+mysql> update customer set snum = 1003 where snum=1002;
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from customer;
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    300 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1003 |
+| 2004 | Grass    | Berlin   |    300 | 1003 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Pereira  | Rome     |    200 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
